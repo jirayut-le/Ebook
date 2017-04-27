@@ -72,10 +72,12 @@ public class MainActivity extends AppCompatActivity {
 
                 for(int i=0; i < jsonArr.length(); i++) {
                     JSONObject bookJson = jsonArr.getJSONObject(i);
-                    results.add(new Book(bookJson.getDouble("prize"),
-                            bookJson.getString("img_url"),
+                    results.add(new Book(bookJson.getString("title"),
                             bookJson.getInt("id"),
-                            bookJson.getString("title")));
+                            bookJson.getDouble("price"),
+                            bookJson.getString("pub_year"),
+                            bookJson.getString("img_url")
+                            ));
                     Log.d("none", bookJson.getString("title"));
                 }
             }catch(JSONException e) {
