@@ -10,4 +10,6 @@ import java.util.Observable;
 public abstract class BookRepository extends Observable{
     public abstract void fetchAllBooks();
     public abstract List<Book> getAllBooks();
+    public abstract List<Book> searchBooks(String s, String sortBy);
+
 }

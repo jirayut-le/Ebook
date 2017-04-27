@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search"/>
-    
+    <Spinner
+        android:id="@+id/sort_method"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
     <ListView
         android:id="@+id/listview_book_list"
         android:layout_width="match_parent"

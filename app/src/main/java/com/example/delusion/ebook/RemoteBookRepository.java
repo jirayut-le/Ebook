@@ -51,6 +51,24 @@ public class RemoteBookRepository extends BookRepository {
         return books;
     }
 
+    @Override
+    public List<Book> searchBooks(String s, String sortBy) {
+        ArrayList<Book> filterBook = new ArrayList<Book>();
+        for(Book b : books){
+
+                if(b.getTitle().contains(s) || b.getPubYear().contains(s)) {
+                    filterBook.add(b);
+                }
+        }
+
+        return filterBook;
+    }
+
+//    private ArrayList<Book> sortByTitle(ArrayList<Book> books){
+//
+//    }
+
+
     public class BookFetcherTask extends AsyncTask<Void,Void,ArrayList<Book>> {
 
         @Override

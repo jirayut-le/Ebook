@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +46,11 @@ public class MainActivity extends AppCompatActivity implements BookListView{
 
         bookAdapter = createAdapter(new ArrayList<Book>());
         listView = (ListView) findViewById(R.id.listview_book_list);
+        final Spinner dropdown = (Spinner)findViewById(R.id.sort_method);
+        String[] items = new String[]{"Titles", "Publication years"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
         searchText = (EditText) findViewById(R.id.search_bar);
         searchText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -57,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements BookListView{
                 if(charSequence.toString().equals("")) {
 
                 } else {
-                    searchItems(charSequence.toString());
+                    Log.d("dropdown",dropdown.getSelectedItem().toString() );
+                    searchItems(charSequence.toString(), dropdown.getSelectedItem().toString());
                 }
             }
 
@@ -74,16 +81,10 @@ public class MainActivity extends AppCompatActivity implements BookListView{
 
     }
 
-    private void searchItems(String s) {
+    private void searchItems(String s, String sortBy) {
         Log.d("None", "search" + s);
-        ArrayList<Book> filterBook = new ArrayList<Book>();
-        for(Book b : repository.getAllBooks()){
-            if(b.getTitle().contains(s)) {
-                filterBook.add(b);
-                Log.d("search", b.getTitle());
-            }
-        }
-        setBookList(filterBook);
+
+        setBookList((ArrayList<Book>) repository.searchBooks(s,sortBy));
     }
 
     @Override
