@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <Button
-        android:id="@+id/button_refresh"
+    <EditText
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Refresh"
-        android:onClick="refreshBooks"/>
+        android:hint="Search"/>
+    
     <ListView
         android:id="@+id/listview_book_list"
         android:layout_width="match_parent"

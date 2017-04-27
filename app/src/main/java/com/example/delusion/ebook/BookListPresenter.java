@@ -25,6 +25,10 @@ public class BookListPresenter implements Observer {
         repository.fetchAllBooks();
     }
 
+    public void search(String text){
+
+    }
+
     @Override
     public void update(Observable obj, Object arg) {
         if(obj == repository) {
