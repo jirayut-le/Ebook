@@ -1,5 +1,6 @@
 package com.example.delusion.ebook;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -9,7 +10,8 @@ import java.util.Observable;
 
 public abstract class BookRepository extends Observable{
     public abstract void fetchAllBooks();
-    public abstract List<Book> getAllBooks();
-    public abstract List<Book> searchBooks(String s, String sortBy);
+    public abstract ArrayList<Book> getAllBooks();
+    public abstract ArrayList<Book> searchBooks(String s, String sortBy);
+    public abstract ArrayList<Book> filterBook(String filterBy);
 
 }

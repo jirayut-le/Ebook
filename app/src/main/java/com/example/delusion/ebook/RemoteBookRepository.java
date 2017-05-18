@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class RemoteBookRepository extends BookRepository {
 
-    private List<Book> books;
+    private ArrayList<Book> books;
 
     private static RemoteBookRepository instance = null;
 
@@ -47,26 +48,42 @@ public class RemoteBookRepository extends BookRepository {
     }
 
     @Override
-    public List<Book> getAllBooks() {
+    public ArrayList<Book> getAllBooks() {
         return books;
     }
 
     @Override
-    public List<Book> searchBooks(String s, String sortBy) {
-        ArrayList<Book> filterBook = new ArrayList<Book>();
+    public ArrayList<Book> searchBooks(String s, String sortBy) {
+        ArrayList<Book> result = new ArrayList<Book>();
         for(Book b : books){
 
-                if(b.getTitle().contains(s) || b.getPubYear().contains(s)) {
-                    filterBook.add(b);
-                }
+            if(b.getTitle().contains(s) || b.getPubYear().contains(s)) {
+                result.add(b);
+            }
+            result = filterSearchBook(result, sortBy);
         }
 
-        return filterBook;
+        return result;
     }
 
-//    private ArrayList<Book> sortByTitle(ArrayList<Book> books){
-//
-//    }
+    private ArrayList<Book> filterSearchBook(ArrayList<Book> books, String filterBy){
+        if(filterBy.equalsIgnoreCase("Titles"))
+            Collections.sort(books, new BookComparatorTitle());
+        else if (filterBy.equalsIgnoreCase("Publication years"))
+            Collections.sort(books, new BookComparatorPubyear());
+        return books;
+    }
+
+    @Override
+    public ArrayList<Book> filterBook(String filterBy){
+
+        if(filterBy.equalsIgnoreCase("Titles"))
+            Collections.sort(books, new BookComparatorTitle());
+        else if (filterBy.equalsIgnoreCase("Publication years"))
+            Collections.sort(books, new BookComparatorPubyear());
+
+        return books;
+    }
 
 
     public class BookFetcherTask extends AsyncTask<Void,Void,ArrayList<Book>> {

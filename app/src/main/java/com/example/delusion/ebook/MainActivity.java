@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,6 +23,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.Exchanger;
 
 public class MainActivity extends AppCompatActivity implements BookListView{
@@ -30,8 +33,9 @@ public class MainActivity extends AppCompatActivity implements BookListView{
     private ArrayAdapter<Book> bookAdapter;
     private ListView listView;
     private EditText searchText;
-    BookListPresenter presenter;
-    BookRepository repository;
+    private BookListPresenter presenter;
+    private BookRepository repository;
+    private Spinner dropdown;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +50,9 @@ public class MainActivity extends AppCompatActivity implements BookListView{
 
         bookAdapter = createAdapter(new ArrayList<Book>());
         listView = (ListView) findViewById(R.id.listview_book_list);
-        final Spinner dropdown = (Spinner)findViewById(R.id.sort_method);
-        String[] items = new String[]{"Titles", "Publication years"};
+
+        dropdown = (Spinner)findViewById(R.id.sort_method);
+        String[] items = new String[]{"Sort By...","Titles", "Publication years"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
 
@@ -74,8 +79,21 @@ public class MainActivity extends AppCompatActivity implements BookListView{
             }
         });
 
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setBookList( repository.filterBook( dropdown.getSelectedItem().toString()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         listView.setAdapter(bookAdapter);
 
+        repository.filterBook(dropdown.getSelectedItem().toString());
         presenter = new BookListPresenter(repository, this);
         presenter.initialize();
 
