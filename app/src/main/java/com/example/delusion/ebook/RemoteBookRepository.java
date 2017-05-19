@@ -14,15 +14,16 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by macbook on 4/27/2017 AD.
  */
 
-public class RemoteBookRepository extends BookRepository {
+public class RemoteBookRepository extends Observable{
 
     private ArrayList<Book> books;
+    private ArrayList<Book> result;
 
     private static RemoteBookRepository instance = null;
 
@@ -34,55 +35,38 @@ public class RemoteBookRepository extends BookRepository {
     }
 
     private RemoteBookRepository(){
-        books = new ArrayList<Book>();
+        books = new ArrayList<>();
+        result = new ArrayList<>();
     }
 
-
-    @Override
     public void fetchAllBooks() {
-        Log.d("none","LOADBOOKS1");
         BookFetcherTask task = new BookFetcherTask();
-        Log.d("none","LOADBOOKS2");
         task.execute();
-        Log.d("none","LOADBOOKS3");
     }
 
-    @Override
     public ArrayList<Book> getAllBooks() {
-        return books;
-    }
-
-    @Override
-    public ArrayList<Book> searchBooks(String s, String sortBy) {
-        ArrayList<Book> result = new ArrayList<Book>();
-        for(Book b : books){
-
-            if(b.getTitle().contains(s) || b.getPubYear().contains(s)) {
-                result.add(b);
-            }
-            result = filterSearchBook(result, sortBy);
-        }
-
         return result;
     }
 
-    private ArrayList<Book> filterSearchBook(ArrayList<Book> books, String filterBy){
-        if(filterBy.equalsIgnoreCase("Titles"))
-            Collections.sort(books, new BookComparatorTitle());
-        else if (filterBy.equalsIgnoreCase("Publication years"))
-            Collections.sort(books, new BookComparatorPubyear());
-        return books;
+    public ArrayList<Book> searchBooks(String s, String sortBy) {
+        result.clear();
+        for(Book b : books){
+            if(b.getTitle().toLowerCase().contains(s.toLowerCase())) {
+                result.add(b);
+            }
+        }
+        sortByTitle();
+        setChanged();
+        notifyObservers();
+        return result;
     }
 
-    @Override
-    public ArrayList<Book> filterBook(String filterBy){
+    public void sortByTitle(){
+        Collections.sort(result, new BookComparatorTitle());
+    }
 
-        if(filterBy.equalsIgnoreCase("Titles"))
-            Collections.sort(books, new BookComparatorTitle());
-        else if (filterBy.equalsIgnoreCase("Publication years"))
-            Collections.sort(books, new BookComparatorPubyear());
-
-        return books;
+    public void sortByPub(){
+        Collections.sort(result, new BookComparatorPubyear());
     }
 
 
@@ -90,9 +74,7 @@ public class RemoteBookRepository extends BookRepository {
 
         @Override
         protected ArrayList<Book> doInBackground(Void... params) {
-            Log.d("none","DOINBACK1");
             String bookListJsonStr = loadBookJson();
-            Log.d("none","DO in Background2:" + bookListJsonStr);
             if(bookListJsonStr == null) {
                 return null;
             }
@@ -109,7 +91,6 @@ public class RemoteBookRepository extends BookRepository {
                             bookJson.getString("pub_year"),
                             bookJson.getString("img_url")
                     ));
-                    Log.d("none", bookJson.getString("title"));
                 }
             }catch(JSONException e) {
                 return null;
@@ -137,18 +118,15 @@ public class RemoteBookRepository extends BookRepository {
 
         @Override
         protected void onPostExecute(ArrayList<Book> results) {
-//            Log.d("none","Here: " + results.size());
-//            if(results != null) {
-//                bookAdapter.clear();
-//                for(Book b : results) {
-//                    bookAdapter.add(b);
-//                }
-//            }
             if(results != null){
+                result.clear();
+                result.addAll(results);
                 books.clear();
                 books.addAll(results);
+                sortByTitle();
                 setChanged();
                 notifyObservers();
+                Log.d("onPost", "book");
             }
         }
     }
