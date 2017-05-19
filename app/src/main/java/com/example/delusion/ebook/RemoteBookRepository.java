@@ -69,7 +69,6 @@ public class RemoteBookRepository extends Observable{
         Collections.sort(result, new BookComparatorPubyear());
     }
 
-
     public class BookFetcherTask extends AsyncTask<Void,Void,ArrayList<Book>> {
 
         @Override
@@ -126,7 +125,6 @@ public class RemoteBookRepository extends Observable{
                 sortByTitle();
                 setChanged();
                 notifyObservers();
-                Log.d("onPost", "book");
             }
         }
     }

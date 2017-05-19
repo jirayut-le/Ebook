@@ -1,13 +1,20 @@
 package com.example.delusion.ebook;
 
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -46,12 +53,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bookPresenter = new BookPresenter(repository, this);
         bookPresenter.initialize();
 
-//
-//        BookAdapter bookAdapter = new BookAdapter(MainActivity.this, repository.getAllBooks());
-//        gridView.setAdapter(bookAdapter);
+        gridView.setOnItemClickListener(onItemClick);
 
     }
 
+    AdapterView.OnItemClickListener onItemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.activity_book_detail_dialog, null);
+
+            TextView bookName = (TextView) mView.findViewById(R.id.bookNameDetail);
+            bookName.setText(repository.getAllBooks().get(i).getTitle());
+
+            TextView pubYear = (TextView) mView.findViewById(R.id.bookPubDetail);
+            pubYear.setText("Publish : " + repository.getAllBooks().get(i).getPubYear());
+
+            TextView price = (TextView) mView.findViewById(R.id.price_detail);
+            price.setText(repository.getAllBooks().get(i).getPrize() + " $");
+
+            ImageView imageView = (ImageView) mView.findViewById(R.id.img_detail);
+            Picasso.with(MainActivity.this).load(repository.getAllBooks().get(i).getImg_url()).into(imageView);
+
+            mBuilder.setView(mView);
+            AlertDialog alertDialog = mBuilder.create();
+            alertDialog.show();
+        }
+    };
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -60,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.d("Search : " , newText);
         repository.searchBooks(newText, "");
         return true;
     }
@@ -69,6 +97,5 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void setBookList(ArrayList<Book> books) {
         bookAdapter = new BookAdapter(MainActivity.this, books);
         gridView.setAdapter(bookAdapter);
-        Log.d("setBookList" , "Set after load");
     }
 }
