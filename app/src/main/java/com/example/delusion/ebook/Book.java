@@ -22,7 +22,7 @@ public class Book {
         this.img_url = img_url;
     }
 
-    public void setPrize(double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -30,7 +30,7 @@ public class Book {
         this.title = title;
     }
 
-    public double getPrize() {
+    public double getPrice() {
         return price;
     }
 

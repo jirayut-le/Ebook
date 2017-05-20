@@ -55,17 +55,24 @@ public class RemoteBookRepository extends Observable{
                 result.add(b);
             }
         }
-        sortByTitle();
-        setChanged();
-        notifyObservers();
+        sort(sortBy);
         return result;
     }
 
-    public void sortByTitle(){
+    public void sort(String sortBy){
+        if(sortBy.equalsIgnoreCase("titles"))
+            sortByTitle();
+        else
+            sortByPub();
+        setChanged();
+        notifyObservers();
+    }
+
+    private void sortByTitle(){
         Collections.sort(result, new BookComparatorTitle());
     }
 
-    public void sortByPub(){
+    private void sortByPub(){
         Collections.sort(result, new BookComparatorPubyear());
     }
 

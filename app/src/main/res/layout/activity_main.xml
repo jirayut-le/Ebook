@@ -7,27 +7,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RadioButton
-        android:id="@+id/radioButton"
+    <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Titles"
-        android:layout_alignBaseline="@+id/radioButton2"
-        android:layout_alignBottom="@+id/radioButton2"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_toEndOf="@+id/sort"
+        android:checkedButton="@+id/radioButton_title"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
 
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pub year"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"/>
+        <RadioButton
+            android:id="@+id/radioButton_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:buttonTint="#e75748"
+            android:text="Titles"
+            android:onClick="sortClick"/>
+
+        <RadioButton
+            android:id="@+id/radioButton_pub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:buttonTint="#e75748"
+            android:text="Pub year"
+            android:onClick="sortClick"/>
+    </RadioGroup>
 
     <GridView
         android:id="@+id/grid_view"
@@ -37,17 +45,17 @@
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
         android:gravity="center"
-        android:layout_below="@+id/radioButton" />
+        android:layout_below="@+id/radioGroup" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sort By :"
-        android:layout_alignBaseline="@+id/radioButton"
-        android:layout_alignBottom="@+id/radioButton"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="11dp" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:paddingTop="12dp"
+        android:text="Sort By :" />
 
     <!--<ListView-->
         <!--android:id="@+id/listview_book_list"-->

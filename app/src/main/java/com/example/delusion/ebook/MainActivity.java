@@ -1,6 +1,5 @@
 package com.example.delusion.ebook;
 
-import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 
@@ -27,6 +24,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private BookAdapter bookAdapter;
 
     private GridView gridView;
+
+    private AlertDialog.Builder mBuilder;
+    private View mView;
+    private BookDetailDialog bookDetailDialog;
+
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,31 +55,29 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         gridView = (GridView) findViewById(R.id.grid_view);
 
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+
         bookPresenter = new BookPresenter(repository, this);
         bookPresenter.initialize();
 
         gridView.setOnItemClickListener(onItemClick);
+    }
 
+    public void sortClick(View v){
+        radioButton = (RadioButton) findViewById(radioGroup.getCheckedRadioButtonId());
+        repository.sort(radioButton.getText().toString());
     }
 
     AdapterView.OnItemClickListener onItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-            View mView = getLayoutInflater().inflate(R.layout.activity_book_detail_dialog, null);
+            mBuilder = new AlertDialog.Builder(MainActivity.this);
+            mView = getLayoutInflater().inflate(R.layout.activity_book_detail_dialog, null);
+            bookDetailDialog = new BookDetailDialog(MainActivity.this, mView);
 
-            TextView bookName = (TextView) mView.findViewById(R.id.bookNameDetail);
-            bookName.setText(repository.getAllBooks().get(i).getTitle());
-
-            TextView pubYear = (TextView) mView.findViewById(R.id.bookPubDetail);
-            pubYear.setText("Publish : " + repository.getAllBooks().get(i).getPubYear());
-
-            TextView price = (TextView) mView.findViewById(R.id.price_detail);
-            price.setText(repository.getAllBooks().get(i).getPrize() + " $");
-
-            ImageView imageView = (ImageView) mView.findViewById(R.id.img_detail);
-            Picasso.with(MainActivity.this).load(repository.getAllBooks().get(i).getImg_url()).into(imageView);
+            bookDetailDialog.setDetail(repository.getAllBooks().get(i));
 
             mBuilder.setView(mView);
             AlertDialog alertDialog = mBuilder.create();
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        repository.searchBooks(newText, "");
+        repository.searchBooks(newText, radioButton.getText().toString());
         return true;
     }
 

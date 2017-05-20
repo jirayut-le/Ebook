@@ -52,7 +52,6 @@ public class BookAdapter extends BaseAdapter {
         if(view == null){
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             gridView = inflater.inflate(R.layout.book_layout, null);
-            Log.d("create", "new grid view");
         }
 
         imgView = (ImageView) gridView.findViewById(R.id.img_view);
