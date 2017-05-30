@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso;
 public class BookDetailDialog extends AlertDialog.Builder{
 
     private View mView;
-
     private TextView bookName, priceText, pubYear;
     private ImageView imageView;
     private Button addCart;
