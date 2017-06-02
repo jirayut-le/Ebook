@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.delusion.ebook.FundView">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/addBalance"
+        android:layout_width="342dp"
+        android:layout_height="60dp"
+        android:layout_x="20dp"
+        android:layout_y="139dp"
+        android:background="?android:attr/colorPressedHighlight"
+        android:elevation="0dp"
+        android:text="ADD Balance"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/currentBalance"
+        android:layout_width="257dp"
+        android:layout_height="wrap_content"
+        android:layout_x="105dp"
+        android:layout_y="64dp"
+        android:text="100"
+        android:textAlignment="center"
+        android:textColor="000000"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="57dp"
+        android:layout_height="58dp"
+        android:layout_x="22dp"
+        android:layout_y="63dp"
+        app:srcCompat="@drawable/ic_money" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="24dp"
+        android:text="You balance"
+        android:textSize="18sp" />
+</AbsoluteLayout>
