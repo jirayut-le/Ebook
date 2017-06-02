@@ -21,6 +21,11 @@ public class Cart {
         totalPrice += b.getPrice();
     }
 
+    public void clearCartList(){
+        cartList.clear();
+        totalPrice = 0;
+    }
+
     public ArrayList<Book> getCartList() {
         return cartList;
     }

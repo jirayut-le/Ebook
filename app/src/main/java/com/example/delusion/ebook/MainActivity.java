@@ -1,10 +1,12 @@
 package com.example.delusion.ebook;
 
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private RemoteBookRepository repository;
     private MenuItem searchItem;
+    private MenuItem balanceItem;
 
     private BookPresenter bookPresenter;
     private BookAdapter bookAdapter;
@@ -32,25 +35,44 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private RadioGroup radioGroup;
     private RadioButton radioButton;
 
+    private User user;
+    private Cart cart;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        user = new User();
+        cart = new Cart();
         initListView();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_items, menu);
+
+        balanceItem = menu.findItem(R.id.action_balance);
         searchItem = menu.findItem(R.id.action_search);
 
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
 
+        balanceItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, FundView.class);
+                Log.d("Fund", Double.toString(user.getFund()));
+                intent.putExtra("balance", Double.toString(user.getFund()));
+                startActivity(intent);
+                return true;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
     private void initListView() {
+
         repository = RemoteBookRepository.getInstance();
 
         gridView = (GridView) findViewById(R.id.grid_view);
@@ -62,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bookPresenter.initialize();
 
         gridView.setOnItemClickListener(onItemClick);
+
     }
 
     public void sortClick(View v){

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class User {
     private double fund;
-    private Cart cart;
     private ArrayList<Book> ownEbook;
     private ArrayList<Book> lastBought;
     private ArrayList<ArrayList<Book>> history;
@@ -17,7 +16,6 @@ public class User {
         this.fund = 100;
         this.ownEbook = new ArrayList<>();
         this.lastBought = new ArrayList<>();
-        this.cart = new Cart();
         this.history = new ArrayList<>();
     }
 
@@ -25,24 +23,14 @@ public class User {
         this.fund += Integer.parseInt(fund);
     }
 
-    public void addToCart(Book book){
-        this.cart.addToCart(book);
-    }
 
-    public double getAllPrice(ArrayList<Book> bookLists){
-        double totalPrice = 0;
-        for(Book b : bookLists){
-            totalPrice += b.getPrice();
-        }
-        return totalPrice;
-    }
-
-    public void buyEbook(ArrayList<Book> buyList){
-        for(Book b : buyList){
+    public void buyEbook(Cart cart){
+        for(Book b : cart.getCartList()){
             this.fund -= b.getPrice();
         }
-        ownEbook.addAll(buyList);
-        lastBought.addAll(buyList);
+        ownEbook.addAll(cart.getCartList());
+        lastBought.clear();
+        lastBought.addAll(cart.getCartList());
     }
 
     public void refund(){
@@ -59,14 +47,6 @@ public class User {
 
     public void setFund(double fund) {
         this.fund = fund;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 
     public ArrayList<Book> getOwnEbook() {
