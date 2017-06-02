@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private RadioGroup radioGroup;
     private RadioButton radioButton;
 
-    private User user;
-    private Cart cart;
+    public static User user;
+    public static Cart cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +59,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         balanceItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(MainActivity.this, FundView.class);
-                Log.d("Fund", Double.toString(user.getFund()));
-                intent.putExtra("balance", Double.toString(user.getFund()));
+                Intent intent = new Intent(MainActivity.this, UserView.class);
                 startActivity(intent);
                 return true;
             }
