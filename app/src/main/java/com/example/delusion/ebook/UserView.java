@@ -19,7 +19,7 @@ public class UserView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fund_view);
+        setContentView(R.layout.activity_user_view);
 
         balanceTxt = (TextView) findViewById(R.id.currentBalance);
         addBalanceBtn = (Button) findViewById(R.id.addBalance);
