@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import static com.example.delusion.ebook.MainActivity.alertDialog;
 import static com.example.delusion.ebook.MainActivity.cart;
 
 public class BookDetailDialog extends AlertDialog.Builder{
@@ -39,6 +41,8 @@ public class BookDetailDialog extends AlertDialog.Builder{
             @Override
             public void onClick(View view) {
                 cart.addToCart(book);
+                Toast.makeText(getContext(), "Add to cart complete.", Toast.LENGTH_SHORT).show();
+                alertDialog.dismiss();
             }
         });
     }

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private AlertDialog.Builder mBuilder;
     private View mView;
     private BookDetailDialog bookDetailDialog;
+    public static AlertDialog alertDialog;
 
     private RadioGroup radioGroup;
     private RadioButton radioButton;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         user = new User();
-        cart = new Cart();
+        cart = new Cart(MainActivity.this);
         initListView();
     }
 
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             bookDetailDialog.setDetail(repository.getAllBooks().get(i));
 
             mBuilder.setView(mView);
-            AlertDialog alertDialog = mBuilder.create();
+            alertDialog = mBuilder.create();
             alertDialog.show();
         }
     };
