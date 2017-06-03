@@ -10,7 +10,7 @@ import static com.example.delusion.ebook.MainActivity.cart;
 public class CartView extends AppCompatActivity {
 
     private ListView cartList;
-    private TextView totalPrice;
+    public static TextView totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,11 @@ public class CartView extends AppCompatActivity {
         cartList.setAdapter(cart);
 
         totalPrice = (TextView) findViewById(R.id.total_price);
-        totalPrice.setText(Double.toString(cart.getTotalPrice()));
+        setTotalPriceText();
 
+    }
+
+    public static void setTotalPriceText(){
+        totalPrice.setText(Double.toString(cart.getTotalPrice()));
     }
 }

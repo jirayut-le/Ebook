@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.example.delusion.ebook.CartView;
 
 import java.util.ArrayList;
 
@@ -104,6 +105,7 @@ public class Cart extends BaseAdapter{
             public void onClick(View view) {
                 Toast.makeText(context, "Delete complete.", Toast.LENGTH_SHORT).show();
                 delete(cartList.get(i));
+                CartView.setTotalPriceText();
             }
         });
         setBookImg(i);
