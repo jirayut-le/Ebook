@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import static com.example.delusion.ebook.MainActivity.cart;
 
 public class BookDetailDialog extends AlertDialog.Builder{
 
@@ -15,6 +16,8 @@ public class BookDetailDialog extends AlertDialog.Builder{
     private TextView bookName, priceText, pubYear;
     private ImageView imageView;
     private Button addCart;
+
+    private Book book;
 
     public BookDetailDialog(Context context, View mView) {
         super(context);
@@ -35,12 +38,13 @@ public class BookDetailDialog extends AlertDialog.Builder{
         addCart.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                cart.addToCart(book);
             }
         });
     }
 
     public void setDetail(Book book){
+        this.book = book;
         setBookName(book.getTitle());
         setPrice(book.getPrice());
         setPub(book.getPubYear());

@@ -19,6 +19,7 @@ public class UserView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Account");
         setContentView(R.layout.activity_user_view);
 
         balanceTxt = (TextView) findViewById(R.id.currentBalance);

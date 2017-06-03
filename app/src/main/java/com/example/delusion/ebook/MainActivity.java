@@ -19,8 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, BookListView{
 
     private RemoteBookRepository repository;
-    private MenuItem searchItem;
-    private MenuItem balanceItem;
+    private MenuItem searchItem, balanceItem, cartItem;
 
     private BookPresenter bookPresenter;
     private BookAdapter bookAdapter;
@@ -52,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         balanceItem = menu.findItem(R.id.action_balance);
         searchItem = menu.findItem(R.id.action_search);
+        cartItem = menu.findItem(R.id.action_cart);
 
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
@@ -60,6 +60,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intent = new Intent(MainActivity.this, UserView.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
+        cartItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, CartView.class);
                 startActivity(intent);
                 return true;
             }
@@ -107,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        repository.searchBooks(query, radioButton.getText().toString());
+        return true;
     }
 
     @Override

@@ -17,13 +17,23 @@ public class Cart {
     }
 
     public void addToCart(Book b){
-        cartList.add(b);
-        totalPrice += b.getPrice();
+        if (checkInCart(b)) {
+            cartList.add(b);
+            totalPrice += b.getPrice();
+        }
     }
 
     public void clearCartList(){
         cartList.clear();
         totalPrice = 0;
+    }
+
+    private boolean checkInCart(Book newBook){
+        for(Book b : cartList){
+            if(b.getTitle().equalsIgnoreCase(newBook.getTitle()))
+                return false;
+        }
+        return true;
     }
 
     public ArrayList<Book> getCartList() {
