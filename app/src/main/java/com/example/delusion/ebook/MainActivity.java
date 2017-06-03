@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        user = new User();
+        user = new User(MainActivity.this);
         cart = new Cart(MainActivity.this);
         initListView();
     }
@@ -132,4 +132,5 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         bookAdapter = new BookAdapter(MainActivity.this, books);
         gridView.setAdapter(bookAdapter);
     }
+
 }

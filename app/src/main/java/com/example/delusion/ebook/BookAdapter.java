@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by macbook on 5/19/2017 AD.
  */
 
-public class BookAdapter extends BaseAdapter {
+public class BookAdapter extends BaseAdapter implements BookGridView{
 
     private ArrayList<Book> bookList;
     private Context context;
@@ -62,11 +62,14 @@ public class BookAdapter extends BaseAdapter {
         return gridView;
     }
 
-    private void setBookImg(int pos){
+
+    @Override
+    public void setBookImg(int pos){
         Picasso.with(context).load(bookList.get(pos).getImg_url()).into(this.imgView);
     }
 
-    private void setBookName(int pos){
+    @Override
+    public void setBookName(int pos){
         bookName.setText(bookList.get(pos).getTitle());
     }
 }

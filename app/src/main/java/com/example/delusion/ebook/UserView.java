@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ public class UserView extends AppCompatActivity {
 
     private TextView balanceTxt;
     private Button addBalanceBtn;
+    private GridView userBookList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,8 @@ public class UserView extends AppCompatActivity {
 
         balanceTxt = (TextView) findViewById(R.id.currentBalance);
         addBalanceBtn = (Button) findViewById(R.id.addBalance);
+        userBookList = (GridView) findViewById(R.id.userBookList);
+        userBookList.setAdapter(user);
 
         setBalanceText();
 

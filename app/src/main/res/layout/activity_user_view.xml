@@ -47,4 +47,35 @@
         android:layout_y="24dp"
         android:text="You balance"
         android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_x="4dp"
+        android:layout_y="246dp"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Your's book list"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <GridView
+            android:id="@+id/userBookList"
+            android:layout_width="match_parent"
+            android:layout_height="211dp"
+            android:columnWidth="120dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:layout_weight="0.29" />
+
+    </LinearLayout>
+
 </AbsoluteLayout>
