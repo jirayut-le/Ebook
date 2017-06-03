@@ -1,7 +1,6 @@
 package com.example.delusion.ebook;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -117,7 +116,6 @@ public class RemoteBookRepository extends Observable{
                 }
                 return result;
             } catch(IOException e) {
-                Log.d("none","Exception");
                 return null;
             }
         }

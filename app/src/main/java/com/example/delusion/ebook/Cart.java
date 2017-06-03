@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.example.delusion.ebook.CartView;
 
 import java.util.ArrayList;
 

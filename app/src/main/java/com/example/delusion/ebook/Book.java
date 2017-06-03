@@ -1,6 +1,5 @@
 package com.example.delusion.ebook;
 
-
 public class Book {
     private int id;
     private double price;
