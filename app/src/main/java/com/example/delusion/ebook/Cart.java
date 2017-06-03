@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -23,6 +25,7 @@ public class Cart extends BaseAdapter{
 
     private TextView bookName, bookPrice;
     private ImageView bookImg;
+    private Button deleteBtn;
 
     public Cart(Context context){
         this.context = context;
@@ -39,6 +42,7 @@ public class Cart extends BaseAdapter{
     }
 
     public void delete(Book b){
+        totalPrice -= b.getPrice();
         cartList.remove(b);
         notifyDataSetChanged();
     }
@@ -88,11 +92,20 @@ public class Cart extends BaseAdapter{
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(context, R.layout.book_cart_layout, null);
         bookName = (TextView) v.findViewById(R.id.book_name_cart);
         bookPrice = (TextView) v.findViewById(R.id.price_cart);
         bookImg = (ImageView) v.findViewById(R.id.img_cart);
+        deleteBtn = (Button) v.findViewById(R.id.deleteBookBtn);
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Delete complete.", Toast.LENGTH_SHORT).show();
+                delete(cartList.get(i));
+            }
+        });
         setBookImg(i);
         setBookName(i);
         setBookPrice(i);
