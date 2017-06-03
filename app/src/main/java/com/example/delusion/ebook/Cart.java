@@ -48,9 +48,10 @@ public class Cart extends BaseAdapter{
         notifyDataSetChanged();
     }
 
-    public void clearCartList(){
+    public void checkOut(){
         cartList.clear();
         totalPrice = 0;
+        notifyDataSetChanged();
     }
 
     private boolean checkInCart(Book newBook){
