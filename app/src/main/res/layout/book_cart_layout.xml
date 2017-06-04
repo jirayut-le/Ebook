@@ -30,7 +30,7 @@
                     android:id="@+id/book_name_cart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView"
+                    android:text="Book name"
                     android:textColor="#3e3e3e"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="TextView"
+                    android:text="Amount 1 item"
                     android:textColor="#3e3e3e"
                     android:textSize="15sp" />
 
@@ -49,7 +49,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Amount 1 item"
+                    android:text="price"
+                    android:textAllCaps="false"
                     android:textColor="#3e3e3e"
                     android:textSize="15sp" />
 
