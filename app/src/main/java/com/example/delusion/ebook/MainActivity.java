@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, BookListView{
 
     private RemoteBookRepository repository;
-    private MenuItem searchItem, balanceItem, cartItem;
+    private MenuItem searchItem;
 
     private BookPresenter bookPresenter;
     private BookAdapter bookAdapter;
@@ -50,32 +50,28 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_items, menu);
 
-        balanceItem = menu.findItem(R.id.action_balance);
         searchItem = menu.findItem(R.id.action_search);
-        cartItem = menu.findItem(R.id.action_cart);
-
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
 
-        balanceItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(MainActivity.this, UserView.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-
-        cartItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(MainActivity.this, CartView.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.action_balance :
+                intent = new Intent(this, UserView.class);
+                break;
+            case R.id.action_cart :
+                intent = new Intent(this, CartView.class);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        this.startActivity(intent);
+        return true;
     }
 
     private void initListView() {
